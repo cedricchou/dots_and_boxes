@@ -1,0 +1,18 @@
+.gridblock {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.gridblock__dot-and-bar {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.gridblock__bar-and-box {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}

@@ -1,0 +1,11 @@
+.vertical-bar {
+    height: 80px;
+    width: 20px;
+    background-color: red;
+}
+
+.horizontal-bar {
+    height: 20px;
+    width: 80px;
+    background-color: red;
+}
