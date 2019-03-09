@@ -6,19 +6,46 @@ import Box from './Box';
 import './styles/GridBlock.css';
 
 
-const GridBlock = (props) => {
-	return (
-		<div className="gridblock">
-			<div className="gridblock__dot-and-bar">
-				<Dot display={props.display} />
-				<Bar orientation="horizontal" display={props.displayTop} />
-			</div>
-			<div className="gridblock__bar-and-box">
-				<Bar orientation="vertical" display={props.displayLeft} />
-				<Box display={props.display} />
-			</div>
-		</div>
-	); 
+class GridBlock extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            completedBy: 0,
+            fillInColourTop: '#cccccc',
+            fillInColourLeft: 'grey',
+        }
+    }
+
+    clickLeft = e => {      
+        this.setState(
+            {
+                fillInColourLeft: "blue"
+            }
+        )   
+    }
+
+    clickTop = e => {      
+        this.setState(
+            {
+                fillInColourTop: "blue"
+            }
+        )   
+    }
+
+    render() {
+        return (
+            <div className="gridblock">
+                <div className="gridblock__dot-and-bar">
+                    <Dot display={this.props.display} />
+                    <Bar orientation="horizontal" display={this.props.displayTop} playerTurnClick={this.clickTop} backgroundColor={this.state.fillInColourTop} />
+                </div>
+                <div className="gridblock__bar-and-box">
+                    <Bar orientation="vertical" display={this.props.displayLeft} playerTurnClick={this.clickLeft} backgroundColor={this.state.fillInColourLeft} />
+                    <Box display={this.props.display} />
+                </div>
+            </div>
+        );
+    }	 
 }
 
 GridBlock.propTypes = {

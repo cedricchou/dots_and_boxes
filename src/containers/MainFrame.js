@@ -4,6 +4,9 @@ import GameBoard from '../components/GameBoard';
 import './styles/MainFrame.css';
 
 export default class MainFrame extends Component {
+    state = {
+        completedBy: null,
+    }
 
   render() {
     return (
