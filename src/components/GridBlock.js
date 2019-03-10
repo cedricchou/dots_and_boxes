@@ -15,7 +15,7 @@ class GridBlock extends React.Component {
         return (
             <div 
             className="gridblock" 
-            id={`${this.props.rowIndex}-${this.props.columnIndex}`}
+            // id={`${this.props.rowIndex}-${this.props.columnIndex}`}
             >
                 <div className="gridblock__dot-and-bar">
                     <Dot display={this.props.display} />
@@ -24,8 +24,7 @@ class GridBlock extends React.Component {
                         display={this.props.displayTop} 
                         playerTurnClick={this.props.clickTop} 
                         backgroundColor={this.props.fillInColourTop} 
-                        rowIndex={this.props.rowIndex} 
-                        columnIndex={this.props.columnIndex}
+                        horizontalIndex={this.props.horizontalIndex}
                     />
                 </div>
                 <div className="gridblock__bar-and-box">
@@ -33,9 +32,8 @@ class GridBlock extends React.Component {
                         orientation="vertical" 
                         display={this.props.displayLeft} 
                         playerTurnClick={this.props.clickLeft} 
-                        backgroundColor={this.props.fillInColourLeft} 
-                        rowIndex={this.props.rowIndex} 
-                        columnIndex={this.props.columnIndex}
+                        backgroundColor={this.props.fillInColourLeft}
+                        verticalIndex={this.props.verticalIndex} 
                     />
                     <Box display={this.props.display} />
                 </div>
