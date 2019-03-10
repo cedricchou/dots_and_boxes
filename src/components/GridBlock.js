@@ -9,38 +9,34 @@ import './styles/GridBlock.css';
 class GridBlock extends React.Component {
     constructor() {
         super();
-        this.state = {
-            completedBy: 0,
-            fillInColourTop: '#cccccc',
-            fillInColourLeft: 'grey',
-        }
-    }
-
-    clickLeft = e => {      
-        this.setState(
-            {
-                fillInColourLeft: "blue"
-            }
-        )   
-    }
-
-    clickTop = e => {      
-        this.setState(
-            {
-                fillInColourTop: "blue"
-            }
-        )   
     }
 
     render() {
         return (
-            <div className="gridblock">
+            <div 
+            className="gridblock" 
+            id={`${this.props.rowIndex}-${this.props.columnIndex}`}
+            >
                 <div className="gridblock__dot-and-bar">
                     <Dot display={this.props.display} />
-                    <Bar orientation="horizontal" display={this.props.displayTop} playerTurnClick={this.clickTop} backgroundColor={this.state.fillInColourTop} />
+                    <Bar 
+                        orientation="horizontal" 
+                        display={this.props.displayTop} 
+                        playerTurnClick={this.props.clickTop} 
+                        backgroundColor={this.props.fillInColourTop} 
+                        rowIndex={this.props.rowIndex} 
+                        columnIndex={this.props.columnIndex}
+                    />
                 </div>
                 <div className="gridblock__bar-and-box">
-                    <Bar orientation="vertical" display={this.props.displayLeft} playerTurnClick={this.clickLeft} backgroundColor={this.state.fillInColourLeft} />
+                    <Bar 
+                        orientation="vertical" 
+                        display={this.props.displayLeft} 
+                        playerTurnClick={this.props.clickLeft} 
+                        backgroundColor={this.props.fillInColourLeft} 
+                        rowIndex={this.props.rowIndex} 
+                        columnIndex={this.props.columnIndex}
+                    />
                     <Box display={this.props.display} />
                 </div>
             </div>
@@ -51,13 +47,21 @@ class GridBlock extends React.Component {
 GridBlock.propTypes = {
     display: PropTypes.string,
     displayLeft: PropTypes.string,
-    displayTop: PropTypes.string
+    displayTop: PropTypes.string,
+    fillInColourLeft: PropTypes.string,
+    fillInColourTop: PropTypes.string,
+    clickTop: PropTypes.func,
+    clickLeft: PropTypes.func,
 };
   
 GridBlock.defaultProps = {	
     display: 'block',
     displayLeft: 'block',
-    displayTop: 'block'
+    displayTop: 'block',
+    fillInColourLeft: 'grey',
+    fillInColourTop: '#ccc',
+    clickTop: () => {},
+    clickLeft: () => {}
 };
 
 export default GridBlock

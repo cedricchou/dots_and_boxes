@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './styles/Bar.css';
 
 const Bar = (props) => {
-  const { orientation } = props;
+  const { orientation, rowIndex, columnIndex } = props;
   const barStyle = {
     display: props.display,
     backgroundColor: props.backgroundColor
@@ -13,7 +13,12 @@ const Bar = (props) => {
 	const className = isVerticalBar ? 'vertical-bar' : 'horizontal-bar';
 	
   return (
-    <div className={className} style={barStyle} onClick={props.playerTurnClick} />
+    <div 
+    className={className} 
+    style={barStyle} 
+    onClick={props.playerTurnClick} 
+    data-cell={`${rowIndex}-${columnIndex}-${orientation}`}
+    />
   )
 }
 
