@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import GridBlock from '../components/GridBlock';
-import GameBoard from '../components/GameBoard';
 import './styles/MainFrame.css';
+import './styles/NewGameButton.css';
 
 export default class MainFrame extends Component {
     constructor() {
@@ -11,14 +11,8 @@ export default class MainFrame extends Component {
             arrayHorizontalBar: Array(24).fill('#ccc'),
             arrayGridBlock: Array(24).fill('#fff'),
             moves: 0,
-            arrayCompletion: []       
+            arrayCompletion: this.buildingArray()      
         }
-    }
-
-    componentDidMount() {
-        this.setState({
-            arrayCompletion: this.buildingArray()
-        })
     }
 
     buildingArray = () => {
@@ -52,7 +46,7 @@ export default class MainFrame extends Component {
             arrayHorizontalBar: Array(24).fill('#ccc'),
             arrayGridBlock: Array(24).fill('#fff'),
             moves: 0,
-            arrayCompletion: []  
+            arrayCompletion: this.buildingArray()  
         })
     }
 
@@ -69,11 +63,15 @@ export default class MainFrame extends Component {
         });
         if((playerBlue.length + playerRed.length) === 16) {
             if(playerBlue.length > playerRed.length) {
-                alert(`the winner is player blue with ${playerBlue.length} against ${playerRed.length}`)
+                setTimeout(function() {
+                    alert(`the winner is player blue with ${playerBlue.length} against ${playerRed.length}`)
+                }, 300)
             } else if(playerRed.length > playerBlue.length) {
-                alert(`the winner is player red with ${playerRed.length} against ${playerBlue.length}`)
+                setTimeout(function() {
+                    alert(`the winner is player red with ${playerRed.length} against ${playerBlue.length}`)
+                }, 300)
             } else if(playerRed.length === playerBlue.length) {
-                alert(`it is a draw`)
+                setTimeout(function() {alert(`it is a draw`)}, 300)
             }
         }
     }
@@ -87,7 +85,7 @@ export default class MainFrame extends Component {
                     arrayVerticalBar: newArr,
                     moves: this.state.moves + 1
                 },
-                this.pointsCounting()
+                () => this.pointsCounting()
             )       
         }
     }
@@ -101,7 +99,7 @@ export default class MainFrame extends Component {
                     arrayHorizontalBar: newArr,
                     moves: this.state.moves + 1
                 },               
-                this.pointsCounting()  
+                () => this.pointsCounting()  
                 ) 
             } 
     }
@@ -113,16 +111,20 @@ export default class MainFrame extends Component {
                 newArr[counts.index] = "blue";
                 this.setState({
                     arrayGridBlock: newArr,
-                })
+                    moves: this.state.moves - 1
+                },
+                () => this.checkWinner()
+                )
             } else if(counts.value === "red") {
                 const newArr = [...this.state.arrayGridBlock];
                 newArr[counts.index] = "red";
                 this.setState({
                     arrayGridBlock: newArr,
-                })
-            
+                    moves: this.state.moves - 1
+                },
+                () => this.checkWinner()
+                )           
         }
-        this.checkWinner();
     }
 
     boxFillingConditions = () => {
@@ -400,6 +402,7 @@ export default class MainFrame extends Component {
                 displayLeft="none" 
             />
         </Fragment>
+        <button type="submit" className="newgamebutton" onClick={this.restart}>New Game</button>
       </div>
     )
   }

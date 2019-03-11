@@ -17,7 +17,7 @@ const Bar = (props) => {
           <div 
             className={className} 
             style={barStyle} 
-            onClick={props.playerTurnClick} 
+            onClick={e => props.playerTurnClick(e)} 
             data-bar={verticalIndex}
           />
         )
@@ -26,7 +26,7 @@ const Bar = (props) => {
         <div 
           className={className} 
           style={barStyle} 
-          onClick={props.playerTurnClick} 
+          onClick={e => props.playerTurnClick(e)} 
           data-bar={horizontalIndex}
         />
       )

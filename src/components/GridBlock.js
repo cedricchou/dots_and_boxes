@@ -6,43 +6,35 @@ import Box from './Box';
 import './styles/GridBlock.css';
 
 
-class GridBlock extends React.Component {
-    constructor() {
-        super();
-    }
 
-    
+const GridBlock = props => (
+    <div 
+    className="gridblock" 
+    id={props.horizontalIndex}
+    >
+        <div className="gridblock__dot-and-bar">
+            <Dot display={props.display} />
+            <Bar 
+                orientation="horizontal" 
+                display={props.displayTop} 
+                playerTurnClick={props.clickTop} 
+                backgroundColor={props.fillInColourTop} 
+                horizontalIndex={props.horizontalIndex}
+            />
+        </div>
+        <div className="gridblock__bar-and-box">
+            <Bar 
+                orientation="vertical" 
+                display={props.displayLeft} 
+                playerTurnClick={props.clickLeft} 
+                backgroundColor={props.fillInColourLeft}
+                verticalIndex={props.verticalIndex} 
+            />
+            <Box display={props.display} fillBlock={props.fillBlock}/>
+        </div>
+    </div>
+) 
 
-    render() {
-        return (
-            <div 
-            className="gridblock" 
-            id={this.props.horizontalIndex}
-            >
-                <div className="gridblock__dot-and-bar">
-                    <Dot display={this.props.display} />
-                    <Bar 
-                        orientation="horizontal" 
-                        display={this.props.displayTop} 
-                        playerTurnClick={this.props.clickTop} 
-                        backgroundColor={this.props.fillInColourTop} 
-                        horizontalIndex={this.props.horizontalIndex}
-                    />
-                </div>
-                <div className="gridblock__bar-and-box">
-                    <Bar 
-                        orientation="vertical" 
-                        display={this.props.displayLeft} 
-                        playerTurnClick={this.props.clickLeft} 
-                        backgroundColor={this.props.fillInColourLeft}
-                        verticalIndex={this.props.verticalIndex} 
-                    />
-                    <Box display={this.props.display} fillBlock={this.props.fillBlock}/>
-                </div>
-            </div>
-        );
-    }	 
-}
 
 GridBlock.propTypes = {
     display: PropTypes.string,
