@@ -99,37 +99,62 @@ export default class MainFrame extends Component {
                     arrayHorizontalBar: newArr,
                     moves: this.state.moves + 1
                 },               
-                () => this.pointsCounting()  
+                () => this.pointsCounting()
                 ) 
             } 
     }
 
     pointsCounting = () => {
         let counts = this.boxFillingConditions();
-            if(counts.value === "blue") {
+        if(counts.length === 2) {
+            if(counts[0].value === "blue" || counts[1].value === "blue") {
                 const newArr = [...this.state.arrayGridBlock];
-                newArr[counts.index] = "blue";
+                newArr[counts[0].index] = "blue";
+                newArr[counts[1].index] = "blue";
                 this.setState({
                     arrayGridBlock: newArr,
                     moves: this.state.moves - 1
                 },
                 () => this.checkWinner()
                 )
-            } else if(counts.value === "red") {
+            } else if(counts[0].value === "red" || counts[1].value === "red") {
                 const newArr = [...this.state.arrayGridBlock];
-                newArr[counts.index] = "red";
+                newArr[counts[0].index] = "red";
+                newArr[counts[1].index] = "red";
                 this.setState({
                     arrayGridBlock: newArr,
                     moves: this.state.moves - 1
                 },
                 () => this.checkWinner()
                 )           
+            }
+        } else if(counts.length === 1) {
+            if(counts[0].value === "blue") {
+                const newArr = [...this.state.arrayGridBlock];
+                newArr[counts[0].index] = "blue";
+                this.setState({
+                    arrayGridBlock: newArr,
+                    moves: this.state.moves - 1
+                },
+                () => this.checkWinner()
+                )
+            } else if(counts[0].value === "red") {
+                const newArr = [...this.state.arrayGridBlock];
+                newArr[counts[0].index] = "red";
+                this.setState({
+                    arrayGridBlock: newArr,
+                    moves: this.state.moves - 1
+                },
+                () => this.checkWinner()
+                )           
+            }
         }
+
     }
 
     boxFillingConditions = () => {
         const boxFilled = this.state.arrayCompletion;
-        let filled = {};
+        let filled = [];
         let arrayHorizontal = this.state.arrayHorizontalBar;
         let arrayVertical = this.state.arrayVerticalBar;
         let arrayGrid = this.state.arrayGridBlock;
@@ -143,10 +168,10 @@ export default class MainFrame extends Component {
                 arrayHorizontal[element[2]] !== "#ccc" &&
                 arrayHorizontal[element[3]] !== "#ccc"
                 ) {
-                    filled = {
-                        value: moveNumber % 2 === 0 ? "red" : "blue",
-                        index: element[4]
-                    };
+                    filled.push({
+                            value: moveNumber % 2 === 0 ? "red" : "blue",
+                            index: element[4]
+                        })
             }   
         }) 
         return filled;
@@ -155,7 +180,7 @@ export default class MainFrame extends Component {
   render() {
     return (
       <div 
-        className="mainframe" 
+        className="mainframe"
     >
         <Fragment>
             <GridBlock
