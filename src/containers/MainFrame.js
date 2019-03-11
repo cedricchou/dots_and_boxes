@@ -46,6 +46,16 @@ export default class MainFrame extends Component {
         return newArray;
     }
 
+    restart = () => {
+        this.setState({
+            arrayVerticalBar: Array(24).fill('grey'),
+            arrayHorizontalBar: Array(24).fill('#ccc'),
+            arrayGridBlock: Array(24).fill('#fff'),
+            moves: 0,
+            arrayCompletion: []  
+        })
+    }
+
     checkWinner = () => {
         const result = this.state.arrayGridBlock;
         const playerBlue = [];
@@ -90,10 +100,10 @@ export default class MainFrame extends Component {
                 {
                     arrayHorizontalBar: newArr,
                     moves: this.state.moves + 1
-                },
-                this.pointsCounting()
-            ) 
-        }  
+                },               
+                this.pointsCounting()  
+                ) 
+            } 
     }
 
     pointsCounting = () => {
@@ -144,7 +154,6 @@ export default class MainFrame extends Component {
     return (
       <div 
         className="mainframe" 
-        onClick={this.pointsCounting} 
     >
         <Fragment>
             <GridBlock
