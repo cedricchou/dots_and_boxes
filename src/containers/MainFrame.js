@@ -40,7 +40,7 @@ export default class MainFrame extends Component {
 
     checkWinner = () => {
         const result = this.state.arrayGridBlock;
-        console.log(result);
+        return result;
     }
 
     clickLeft = e => { 
