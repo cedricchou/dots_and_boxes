@@ -20,7 +20,7 @@ export default class MainFrame extends Component {
         // [vertical left bar, vertical right bar, 
         // horizontal top bar, horizontal bottom bar, box number]
         const initialArray = [];
-        for(let i = 0; i < ((4+1)*(4+1)); i++) {
+        for(let i = 0; i < 25; i++) {
             initialArray.push(i)
         }
         const newArray = [];
@@ -44,31 +44,68 @@ export default class MainFrame extends Component {
         })
     }
 
-    renderGrid = (arr, top = "block", left = "block", box= "block") => {
+    boardArrayBuilder = () => {
+        const initialArray = [];
+        for(let i = 0; i < 25; i++) {
+            initialArray.push(i)
+        }
+        return initialArray
+    }
+
+    renderGrid = (arr) => {
         return arr.map((value, index) => {
-            if(index === arr.length-1) {
+            if(index === 4 || index === 9 || index === 14 || index === 19) {
                 return (
                     <GridBlock
-                    key={index}
-                    displayTop="none"
-                    displayLeft={left}
-                    display="none"
-                    verticalIndex={value}
-                    horizontalIndex={value}
-                    clickTop={this.clickTop} 
-                    clickLeft={this.clickLeft} 
-                    fillBlock={this.state.arrayGridBlock[value]}
-                    fillInColourTop={this.state.arrayHorizontalBar[value]}
-                    fillInColourLeft={this.state.arrayVerticalBar[value]}               
-                />
+                        key={index}
+                        displayTop="none"
+                        display="none"
+                        verticalIndex={value}
+                        horizontalIndex={value}
+                        clickTop={this.clickTop} 
+                        clickLeft={this.clickLeft} 
+                        fillBlock={this.state.arrayGridBlock[value]}
+                        fillInColourTop={this.state.arrayHorizontalBar[value]}
+                        fillInColourLeft={this.state.arrayVerticalBar[value]}               
+                    />
+                )
+            }
+            if(index > 19 && index < arr.length - 1) {
+                return (
+                    <GridBlock
+                        key={index}
+                        displayLeft="none"
+                        display="none"
+                        verticalIndex={value}
+                        horizontalIndex={value}
+                        clickTop={this.clickTop} 
+                        clickLeft={this.clickLeft} 
+                        fillBlock={this.state.arrayGridBlock[value]}
+                        fillInColourTop={this.state.arrayHorizontalBar[value]}
+                        fillInColourLeft={this.state.arrayVerticalBar[value]}               
+                    />
+                )
+            }
+            if(index === 24) {
+                return (
+                    <GridBlock
+                        key={index}
+                        displayLeft="none"
+                        display="none"
+                        displayTop="none"
+                        verticalIndex={value}
+                        horizontalIndex={value}
+                        clickTop={this.clickTop} 
+                        clickLeft={this.clickLeft} 
+                        fillBlock={this.state.arrayGridBlock[value]}
+                        fillInColourTop={this.state.arrayHorizontalBar[value]}
+                        fillInColourLeft={this.state.arrayVerticalBar[value]}               
+                    />
                 )
             }
             return (               
                 <GridBlock
                     key={value}
-                    displayTop={top}
-                    displayLeft={left}
-                    display={box}
                     verticalIndex={value}
                     horizontalIndex={value}
                     clickTop={this.clickTop} 
@@ -191,7 +228,7 @@ export default class MainFrame extends Component {
         let arrayGrid = this.state.arrayGridBlock;
         let moveNumber = this.state.moves;
         boxFilled.forEach(element => {   
-            if(arrayGrid[element[4]] === "red" || arrayGrid[element[4]] === "blue") {
+            if(arrayGrid[element[0]] === "red" || arrayGrid[element[0]] === "blue") {
                 return;
             } else if (
                 arrayVertical[element[0]] !== "grey" &&
@@ -209,22 +246,11 @@ export default class MainFrame extends Component {
     }
 
   render() {
+    const boardArray = this.boardArrayBuilder();  
     return (
       <div className="mainframe">
         <Fragment>
-            {this.renderGrid([0,1,2,3,4])}
-        </Fragment>
-        <Fragment>
-            {this.renderGrid([5,6,7,8,9])}
-        </Fragment>
-        <Fragment>
-            {this.renderGrid([10,11,12,13,14])}
-        </Fragment>
-        <Fragment>
-            {this.renderGrid([15,16,17,18,19])}
-        </Fragment>
-        <Fragment>
-            {this.renderGrid([20,21,22,23,24], "block", "none", "none")}           
+            {this.renderGrid(boardArray)}
         </Fragment>
         <NewGameButton restart={this.restart} />
       </div>
