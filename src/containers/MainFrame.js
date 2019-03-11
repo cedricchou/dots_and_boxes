@@ -33,14 +33,39 @@ export default class MainFrame extends Component {
             [5, 6, 5, 10, 5],
             [6, 7, 6, 11, 6],
             [7, 8, 7, 12, 7],
-            [8, 9, 8, 13, 8],  
+            [8, 9, 8, 13, 8],
+            [10, 11, 10, 15, 10],
+            [11, 12, 11, 16, 11],
+            [12, 13, 12, 17, 12],
+            [13, 14, 13, 18, 13],
+            [15, 16, 15, 20, 15],
+            [16, 17, 16, 21, 16],
+            [17, 18, 17, 22, 17],
+            [18, 19, 18, 23, 18],
         ]
         return newArray;
     }
 
     checkWinner = () => {
         const result = this.state.arrayGridBlock;
-        return result;
+        const playerBlue = [];
+        const playerRed = [];
+        result.forEach(value => {
+            if(value === "blue") {
+                playerBlue.push(value);
+            } else if (value === "red") {
+                playerRed.push(value);
+            }
+        });
+        if((playerBlue.length + playerRed.length) === 16) {
+            if(playerBlue.length > playerRed.length) {
+                alert(`the winner is player blue with ${playerBlue.length} against ${playerRed.length}`)
+            } else if(playerRed.length > playerBlue.length) {
+                alert(`the winner is player red with ${playerRed.length} against ${playerBlue.length}`)
+            } else if(playerRed.length === playerBlue.length) {
+                alert(`it is a draw`)
+            }
+        }
     }
 
     clickLeft = e => { 
@@ -87,9 +112,10 @@ export default class MainFrame extends Component {
                 })
             
         }
+        this.checkWinner();
     }
 
-    boxFillingConditions = (e) => {
+    boxFillingConditions = () => {
         const boxFilled = this.state.arrayCompletion;
         let filled = {};
         let arrayHorizontal = this.state.arrayHorizontalBar;
@@ -116,7 +142,10 @@ export default class MainFrame extends Component {
 
   render() {
     return (
-      <div className="mainframe" onClick={this.pointsCounting} >
+      <div 
+        className="mainframe" 
+        onClick={this.pointsCounting} 
+    >
         <Fragment>
             <GridBlock
                 verticalIndex={0}
@@ -219,6 +248,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={10} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[10]}
                 fillInColourTop={this.state.arrayHorizontalBar[10]}
                 fillInColourLeft={this.state.arrayVerticalBar[10]}
             />
@@ -227,6 +257,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={11} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[11]}
                 fillInColourTop={this.state.arrayHorizontalBar[11]}
                 fillInColourLeft={this.state.arrayVerticalBar[11]}
             />
@@ -234,7 +265,8 @@ export default class MainFrame extends Component {
                 verticalIndex={12}
                 horizontalIndex={12} 
                 clickTop={this.clickTop} 
-                clickLeft={this.clickLeft} 
+                clickLeft={this.clickLeft}
+                fillBlock={this.state.arrayGridBlock[12]} 
                 fillInColourTop={this.state.arrayHorizontalBar[12]}
                 fillInColourLeft={this.state.arrayVerticalBar[12]}
             />
@@ -243,6 +275,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={13} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[13]}
                 fillInColourTop={this.state.arrayHorizontalBar[13]}
                 fillInColourLeft={this.state.arrayVerticalBar[13]}
             />
@@ -262,7 +295,8 @@ export default class MainFrame extends Component {
                 verticalIndex={15}
                 horizontalIndex={15} 
                 clickTop={this.clickTop} 
-                clickLeft={this.clickLeft} 
+                clickLeft={this.clickLeft}
+                fillBlock={this.state.arrayGridBlock[15]} 
                 fillInColourTop={this.state.arrayHorizontalBar[15]}
                 fillInColourLeft={this.state.arrayVerticalBar[15]}
             />
@@ -271,6 +305,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={16} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[16]}
                 fillInColourTop={this.state.arrayHorizontalBar[16]}
                 fillInColourLeft={this.state.arrayVerticalBar[16]}
             />
@@ -279,6 +314,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={17} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[17]}
                 fillInColourTop={this.state.arrayHorizontalBar[17]}
                 fillInColourLeft={this.state.arrayVerticalBar[17]}
             />
@@ -287,6 +323,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={18} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[18]}
                 fillInColourTop={this.state.arrayHorizontalBar[18]}
                 fillInColourLeft={this.state.arrayVerticalBar[18]}
             />
