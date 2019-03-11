@@ -11,11 +11,13 @@ class GridBlock extends React.Component {
         super();
     }
 
+    
+
     render() {
         return (
             <div 
             className="gridblock" 
-            // id={`${this.props.rowIndex}-${this.props.columnIndex}`}
+            id={this.props.horizontalIndex}
             >
                 <div className="gridblock__dot-and-bar">
                     <Dot display={this.props.display} />
@@ -35,7 +37,7 @@ class GridBlock extends React.Component {
                         backgroundColor={this.props.fillInColourLeft}
                         verticalIndex={this.props.verticalIndex} 
                     />
-                    <Box display={this.props.display} />
+                    <Box display={this.props.display} fillBlock={this.props.fillBlock}/>
                 </div>
             </div>
         );

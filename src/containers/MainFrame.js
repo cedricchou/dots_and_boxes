@@ -9,47 +9,121 @@ export default class MainFrame extends Component {
         this.state = {
             arrayVerticalBar: Array(24).fill('grey'),
             arrayHorizontalBar: Array(24).fill('#ccc'),
-            moves: 0       
+            arrayGridBlock: Array(24).fill('#fff'),
+            moves: 0,
+            arrayCompletion: []       
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            arrayCompletion: this.buildingArray()
+        })
+    }
+
+    buildingArray = () => {
+        // the element indexes are as follow: 
+        // [vertical left bar, vertical right bar, 
+        // horizontal top bar, horizontal bottom bar, box number]
+        const newArray = [
+            [0, 1, 0, 5, 0],
+            [1, 2, 1, 6, 1],
+            [2, 3, 2, 7, 2],
+            [3, 4, 3, 8, 3],
+            [5, 6, 5, 10, 5],
+            [6, 7, 6, 11, 6],
+            [7, 8, 7, 12, 7],
+            [8, 9, 8, 13, 8],  
+        ]
+        return newArray;
+    }
+
+    checkWinner = () => {
+        const result = this.state.arrayGridBlock;
+        console.log(result);
     }
 
     clickLeft = e => { 
         if (this.state.arrayVerticalBar[e.target.dataset.bar] === 'grey') {
-            console.log(this.state.arrayVerticalBar)
             const newArr = [...this.state.arrayVerticalBar];
             newArr[e.target.dataset.bar] = this.state.moves % 2 === 0 ? "blue" : "red";
             this.setState(
                 {
                     arrayVerticalBar: newArr,
                     moves: this.state.moves + 1
-                }
+                },
+                this.pointsCounting()
             )       
         }
     }
 
     clickTop = e => {  
-        if (this.state.arrayHorizontalBar[e.target.dataset.bar] === '#ccc') {
-            console.log(this.state.arrayHorizontalBar)
+        if (this.state.arrayHorizontalBar[e.target.dataset.bar] === '#ccc') {           
             const newArr = [...this.state.arrayHorizontalBar];
             newArr[e.target.dataset.bar] = this.state.moves % 2 === 0 ? "blue" : "red";
                 this.setState(
                 {
                     arrayHorizontalBar: newArr,
                     moves: this.state.moves + 1
-                }
+                },
+                this.pointsCounting()
             ) 
         }  
     }
 
+    pointsCounting = () => {
+        let counts = this.boxFillingConditions();
+            if(counts.value === "blue") {
+                const newArr = [...this.state.arrayGridBlock];
+                newArr[counts.index] = "blue";
+                this.setState({
+                    arrayGridBlock: newArr,
+                })
+            } else if(counts.value === "red") {
+                const newArr = [...this.state.arrayGridBlock];
+                newArr[counts.index] = "red";
+                this.setState({
+                    arrayGridBlock: newArr,
+                })
+            
+        }
+    }
+
+    boxFillingConditions = (e) => {
+        const boxFilled = this.state.arrayCompletion;
+        let filled = {};
+        let arrayHorizontal = this.state.arrayHorizontalBar;
+        let arrayVertical = this.state.arrayVerticalBar;
+        let arrayGrid = this.state.arrayGridBlock;
+        let moveNumber = this.state.moves;
+        boxFilled.forEach(element => {   
+            if(arrayGrid[element[4]] === "red" || arrayGrid[element[4]] === "blue") {
+                return;
+            } else if (
+                arrayVertical[element[0]] !== "grey" &&
+                arrayVertical[element[1]] !== "grey" &&                
+                arrayHorizontal[element[2]] !== "#ccc" &&
+                arrayHorizontal[element[3]] !== "#ccc"
+                ) {
+                    filled = {
+                        value: moveNumber % 2 === 0 ? "red" : "blue",
+                        index: element[4]
+                    };
+            }   
+        }) 
+        return filled;
+    }
+
   render() {
     return (
-      <div className="mainframe">
+      <div className="mainframe" onClick={this.pointsCounting} >
         <Fragment>
             <GridBlock
                 verticalIndex={0}
                 horizontalIndex={0}
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[0]}
                 fillInColourTop={this.state.arrayHorizontalBar[0]}
                 fillInColourLeft={this.state.arrayVerticalBar[0]}
             />
@@ -58,6 +132,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={1}
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[1]}
                 fillInColourTop={this.state.arrayHorizontalBar[1]}
                 fillInColourLeft={this.state.arrayVerticalBar[1]}
             />
@@ -65,7 +140,8 @@ export default class MainFrame extends Component {
                 verticalIndex={2}
                 horizontalIndex={2}
                 clickTop={this.clickTop} 
-                clickLeft={this.clickLeft} 
+                clickLeft={this.clickLeft}
+                fillBlock={this.state.arrayGridBlock[2]} 
                 fillInColourTop={this.state.arrayHorizontalBar[2]}
                 fillInColourLeft={this.state.arrayVerticalBar[2]}
             />
@@ -73,7 +149,8 @@ export default class MainFrame extends Component {
                 verticalIndex={3}
                 horizontalIndex={3}
                 clickTop={this.clickTop} 
-                clickLeft={this.clickLeft} 
+                clickLeft={this.clickLeft}
+                fillBlock={this.state.arrayGridBlock[3]} 
                 fillInColourTop={this.state.arrayHorizontalBar[3]}
                 fillInColourLeft={this.state.arrayVerticalBar[3]}
             />
@@ -94,6 +171,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={5} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[5]}
                 fillInColourTop={this.state.arrayHorizontalBar[5]}
                 fillInColourLeft={this.state.arrayVerticalBar[5]}
             />
@@ -101,7 +179,8 @@ export default class MainFrame extends Component {
                 verticalIndex={6}
                 horizontalIndex={6} 
                 clickTop={this.clickTop} 
-                clickLeft={this.clickLeft} 
+                clickLeft={this.clickLeft}
+                fillBlock={this.state.arrayGridBlock[6]} 
                 fillInColourTop={this.state.arrayHorizontalBar[6]}
                 fillInColourLeft={this.state.arrayVerticalBar[6]}
             />
@@ -110,6 +189,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={7} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[7]}
                 fillInColourTop={this.state.arrayHorizontalBar[7]}
                 fillInColourLeft={this.state.arrayVerticalBar[7]}
             />
@@ -118,6 +198,7 @@ export default class MainFrame extends Component {
                 horizontalIndex={8} 
                 clickTop={this.clickTop} 
                 clickLeft={this.clickLeft} 
+                fillBlock={this.state.arrayGridBlock[8]}
                 fillInColourTop={this.state.arrayHorizontalBar[8]}
                 fillInColourLeft={this.state.arrayVerticalBar[8]}
             />
@@ -125,7 +206,7 @@ export default class MainFrame extends Component {
                 verticalIndex={9}
                 horizontalIndex={9} 
                 clickTop={this.clickTop} 
-                clickLeft={this.clickLeft} 
+                clickLeft={this.clickLeft}
                 fillInColourTop={this.state.arrayHorizontalBar[9]}
                 fillInColourLeft={this.state.arrayVerticalBar[9]}
                 displayTop="none" 
