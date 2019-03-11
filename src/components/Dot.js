@@ -1,10 +1,9 @@
 import React from 'react';
 import './styles/Dot.css'
 
-const Dot = (props) => {
+const Dot = () => {
   return (
-    <div className="dot">
-    </div>
+    <div className="dot" />    
   )
 }
 

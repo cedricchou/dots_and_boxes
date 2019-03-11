@@ -7,9 +7,9 @@ export default class MainFrame extends Component {
     constructor() {
         super();
         this.state = {
-            arrayVerticalBar: Array(24).fill('grey'),
-            arrayHorizontalBar: Array(24).fill('#ccc'),
-            arrayGridBlock: Array(24).fill('#fff'),
+            arrayVerticalBar: Array(25).fill('grey'),
+            arrayHorizontalBar: Array(25).fill('#ccc'),
+            arrayGridBlock: Array(25).fill('#fff'),
             moves: 0,
             arrayCompletion: this.buildingArray()      
         }
@@ -19,32 +19,26 @@ export default class MainFrame extends Component {
         // the element indexes are as follow: 
         // [vertical left bar, vertical right bar, 
         // horizontal top bar, horizontal bottom bar, box number]
-        const newArray = [
-            [0, 1, 0, 5, 0],
-            [1, 2, 1, 6, 1],
-            [2, 3, 2, 7, 2],
-            [3, 4, 3, 8, 3],
-            [5, 6, 5, 10, 5],
-            [6, 7, 6, 11, 6],
-            [7, 8, 7, 12, 7],
-            [8, 9, 8, 13, 8],
-            [10, 11, 10, 15, 10],
-            [11, 12, 11, 16, 11],
-            [12, 13, 12, 17, 12],
-            [13, 14, 13, 18, 13],
-            [15, 16, 15, 20, 15],
-            [16, 17, 16, 21, 16],
-            [17, 18, 17, 22, 17],
-            [18, 19, 18, 23, 18],
-        ]
+        const initialArray = [];
+        for(let i = 0; i < ((4+1)*(4+1)); i++) {
+            initialArray.push(i)
+        }
+        const newArray = [];
+        initialArray.forEach((value, index) => {
+            if(index === 4 || index === 9 || index === 14 || index >= 19) {
+                return;
+            } else {
+                newArray.push([index, index+1, index, index+5])
+            }
+        })
         return newArray;
     }
 
     restart = () => {
         this.setState({
-            arrayVerticalBar: Array(24).fill('grey'),
-            arrayHorizontalBar: Array(24).fill('#ccc'),
-            arrayGridBlock: Array(24).fill('#fff'),
+            arrayVerticalBar: Array(25).fill('grey'),
+            arrayHorizontalBar: Array(25).fill('#ccc'),
+            arrayGridBlock: Array(25).fill('#fff'),
             moves: 0,
             arrayCompletion: this.buildingArray()  
         })
@@ -207,7 +201,7 @@ export default class MainFrame extends Component {
                 ) {
                     filled.push({
                             value: moveNumber % 2 === 0 ? "red" : "blue",
-                            index: element[4]
+                            index: element[0]
                         })
             }   
         }) 
