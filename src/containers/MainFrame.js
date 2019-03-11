@@ -11,14 +11,11 @@ export default class MainFrame extends Component {
             arrayHorizontalBar: Array(25).fill('#ccc'),
             arrayGridBlock: Array(25).fill('#fff'),
             moves: 0,
-            arrayCompletion: this.buildingArray()      
+            arrayCompletion: this.buildingArray()
         }
     }
 
     buildingArray = () => {
-        // the element indexes are as follow: 
-        // [vertical left bar, vertical right bar, 
-        // horizontal top bar, horizontal bottom bar, box number]
         const initialArray = [];
         for(let i = 0; i < 25; i++) {
             initialArray.push(i)
