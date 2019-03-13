@@ -144,7 +144,7 @@ export default class MainFrame extends Component {
     clickLeft = e => { 
         if (this.state.arrayVerticalBar[e.target.dataset.bar] === 'grey') {
             const newArr = [...this.state.arrayVerticalBar];
-            newArr[e.target.dataset.bar] = this.state.moves % 2 === 0 ? "blue" : "red";
+            newArr[e.target.dataset.bar] = this.state.moves % 2 === 0 ? "rgba(0, 0, 255, 0.8)" : "rgba(255, 0, 0, 0.8)";
             this.setState(
                 {
                     arrayVerticalBar: newArr,
@@ -158,7 +158,7 @@ export default class MainFrame extends Component {
     clickTop = e => {  
         if (this.state.arrayHorizontalBar[e.target.dataset.bar] === '#ccc') {           
             const newArr = [...this.state.arrayHorizontalBar];
-            newArr[e.target.dataset.bar] = this.state.moves % 2 === 0 ? "blue" : "red";
+            newArr[e.target.dataset.bar] = this.state.moves % 2 === 0 ? "rgba(0, 0, 255, 0.8)" : "rgba(255, 0, 0, 0.8)";
                 this.setState(
                 {
                     arrayHorizontalBar: newArr,
