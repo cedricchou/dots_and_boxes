@@ -38,7 +38,8 @@ export default class MainFrame extends Component {
             arrayGridBlock: Array(25).fill('#fff'),
             moves: 0,
             arrayCompletion: this.buildingArray()  
-        })
+        });
+        this.props.reset()
     }
 
     boardArrayBuilder = () => {
