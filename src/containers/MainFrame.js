@@ -4,20 +4,23 @@ import NewGameButton from '../components/NewGameButton';
 import './styles/MainFrame.css';
 
 export default class MainFrame extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        const rowSize = parseInt(this.props.rowValue) + 1;
+        const columnSize = parseInt(this.props.columnValue) + 1;
         this.state = {
-            arrayVerticalBar: Array(25).fill('grey'),
-            arrayHorizontalBar: Array(25).fill('#ccc'),
-            arrayGridBlock: Array(25).fill('#fff'),
+            arrayVerticalBar: Array(rowSize*columnSize).fill('grey'),
+            arrayHorizontalBar: Array(rowSize*columnSize).fill('#ccc'),
+            arrayGridBlock: Array(rowSize*columnSize).fill('#fff'),
             moves: 0,
-            arrayCompletion: this.buildingArray()
+            arrayCompletion: this.buildingArray(rowSize, columnSize)
         }
     }
 
-    buildingArray = () => {
+    buildingArray = (row, column) => {
+        const boardSize = row*column;
         const initialArray = [];
-        for(let i = 0; i < 25; i++) {
+        for(let i = 0; i < boardSize; i++) {
             initialArray.push(i)
         }
         const newArray = [];
@@ -42,9 +45,10 @@ export default class MainFrame extends Component {
         this.props.reset()
     }
 
-    boardArrayBuilder = () => {
+    boardArrayBuilder = (row, column) => {
+        const boardSize = (row+1)*(column+1);
         const initialArray = [];
-        for(let i = 0; i < 25; i++) {
+        for(let i = 0; i < boardSize; i++) {
             initialArray.push(i)
         }
         return initialArray
@@ -52,55 +56,55 @@ export default class MainFrame extends Component {
 
     renderGrid = (arr) => {
         return arr.map((value, index) => {
-            if(index === 4 || index === 9 || index === 14 || index === 19) {
-                return (
-                    <GridBlock
-                        key={index}
-                        displayTop="none"
-                        display="none"
-                        verticalIndex={value}
-                        horizontalIndex={value}
-                        clickTop={this.clickTop} 
-                        clickLeft={this.clickLeft} 
-                        fillBlock={this.state.arrayGridBlock[value]}
-                        fillInColourTop={this.state.arrayHorizontalBar[value]}
-                        fillInColourLeft={this.state.arrayVerticalBar[value]}               
-                    />
-                )
-            }
-            if(index > 19 && index < arr.length - 1) {
-                return (
-                    <GridBlock
-                        key={index}
-                        displayLeft="none"
-                        display="none"
-                        verticalIndex={value}
-                        horizontalIndex={value}
-                        clickTop={this.clickTop} 
-                        clickLeft={this.clickLeft} 
-                        fillBlock={this.state.arrayGridBlock[value]}
-                        fillInColourTop={this.state.arrayHorizontalBar[value]}
-                        fillInColourLeft={this.state.arrayVerticalBar[value]}               
-                    />
-                )
-            }
-            if(index === 24) {
-                return (
-                    <GridBlock
-                        key={index}
-                        displayLeft="none"
-                        display="none"
-                        displayTop="none"
-                        verticalIndex={value}
-                        horizontalIndex={value}
-                        clickTop={this.clickTop} 
-                        clickLeft={this.clickLeft} 
-                        fillBlock={this.state.arrayGridBlock[value]}
-                        fillInColourTop={this.state.arrayHorizontalBar[value]}
-                        fillInColourLeft={this.state.arrayVerticalBar[value]}               
-                    />
-                )
-            }
+            // if(index === 4 || index === 9 || index === 14 || index === 19) {
+            //     return (
+            //         <GridBlock
+            //             key={index}
+            //             displayTop="none"
+            //             display="none"
+            //             verticalIndex={value}
+            //             horizontalIndex={value}
+            //             clickTop={this.clickTop} 
+            //             clickLeft={this.clickLeft} 
+            //             fillBlock={this.state.arrayGridBlock[value]}
+            //             fillInColourTop={this.state.arrayHorizontalBar[value]}
+            //             fillInColourLeft={this.state.arrayVerticalBar[value]}               
+            //         />
+            //     )
+            // }
+            // if(index > 19 && index < arr.length - 1) {
+            //     return (
+            //         <GridBlock
+            //             key={index}
+            //             displayLeft="none"
+            //             display="none"
+            //             verticalIndex={value}
+            //             horizontalIndex={value}
+            //             clickTop={this.clickTop} 
+            //             clickLeft={this.clickLeft} 
+            //             fillBlock={this.state.arrayGridBlock[value]}
+            //             fillInColourTop={this.state.arrayHorizontalBar[value]}
+            //             fillInColourLeft={this.state.arrayVerticalBar[value]}               
+            //         />
+            //     )
+            // }
+            // if(index === 24) {
+            //     return (
+            //         <GridBlock
+            //             key={index}
+            //             displayLeft="none"
+            //             display="none"
+            //             displayTop="none"
+            //             verticalIndex={value}
+            //             horizontalIndex={value}
+            //             clickTop={this.clickTop} 
+            //             clickLeft={this.clickLeft} 
+            //             fillBlock={this.state.arrayGridBlock[value]}
+            //             fillInColourTop={this.state.arrayHorizontalBar[value]}
+            //             fillInColourLeft={this.state.arrayVerticalBar[value]}               
+            //         />
+            //     )
+            // }
             return (               
                 <GridBlock
                     key={value}
@@ -244,7 +248,8 @@ export default class MainFrame extends Component {
     }
 
   render() {
-    const boardArray = this.boardArrayBuilder();  
+    console.log(this.state.arrayVerticalBar.length);
+    const boardArray = this.boardArrayBuilder(parseInt(this.props.rowValue), parseInt(this.props.columnValue));  
     return (
       <div className="mainframe">
         <Fragment>

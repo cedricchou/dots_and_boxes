@@ -47,7 +47,7 @@ class App extends Component {
           <StartPage          
             startClick={this.startClick} 
             rowValueChange={e => this.handleChangeRow(e)}
-            columnValueChange={e => this.handleChangeRow(e)}
+            columnValueChange={e => this.handleChangeColumn(e)}
           /> : 
           <MainFrame 
             reset={this.resetClick}
