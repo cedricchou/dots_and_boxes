@@ -25,6 +25,7 @@ export default class MainFrame extends Component {
         }
         const newArray = [];
         initialArray.forEach((value, index) => {
+            
             if(index === 4 || index === 9 || index === 14 || index >= 19) {
                 return;
             } else {
@@ -35,12 +36,14 @@ export default class MainFrame extends Component {
     }
 
     restart = () => {
+        const rowSize = parseInt(this.props.rowValue) + 1;
+        const columnSize = parseInt(this.props.columnValue) + 1;
         this.setState({
-            arrayVerticalBar: Array(25).fill('grey'),
-            arrayHorizontalBar: Array(25).fill('#ccc'),
-            arrayGridBlock: Array(25).fill('#fff'),
+            arrayVerticalBar: Array(rowSize*columnSize).fill('grey'),
+            arrayHorizontalBar: Array(rowSize*columnSize).fill('#ccc'),
+            arrayGridBlock: Array(rowSize*columnSize).fill('#fff'),
             moves: 0,
-            arrayCompletion: this.buildingArray()  
+            arrayCompletion: this.buildingArray(rowSize, columnSize)  
         });
         this.props.reset()
     }
@@ -248,7 +251,6 @@ export default class MainFrame extends Component {
     }
 
   render() {
-    console.log(this.state.arrayVerticalBar.length);
     const boardArray = this.boardArrayBuilder(parseInt(this.props.rowValue), parseInt(this.props.columnValue));  
     return (
       <div className="mainframe">
